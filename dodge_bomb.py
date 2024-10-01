@@ -11,6 +11,7 @@ DELTA = {pg.K_UP: (0,-5),
          pg.K_LEFT: (-5,0),
          pg.K_RIGHT: (+5,0),
          }  # 各キーの増減を設定
+saccs = [a for a in range(1, 11)]
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 def check_bound(obj_rct: pg.Rect) -> tuple[bool,bool]:
@@ -57,11 +58,10 @@ def gameover(screen:pg.Surface) -> None:
         
         
 def accsel():
-    saccs = [a for a in range(1, 11)]
     for r in range(1, 11):
         bb_img = pg.Surface((20*r, 20*r))
         pg.draw.circle(bb_img, (255, 0, 0), (10*r, 10*r), 10*r)
-    return  bb_img
+    return  
 
 
 def main():
