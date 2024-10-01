@@ -5,12 +5,12 @@ import time
 import pygame as pg
 
 
-WIDTH, HEIGHT = 1100, 650
+WIDTH, HEIGHT = 1100, 650  # 幅、高さを設定
 DELTA = {pg.K_UP: (0,-5),
          pg.K_DOWN: (0,+5),
          pg.K_LEFT: (-5,0),
          pg.K_RIGHT: (+5,0),
-         }
+         }  # 各キーの増減を設定
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 def check_bound(obj_rct: pg.Rect) -> tuple[bool,bool]:
@@ -38,18 +38,20 @@ def gameover(screen:pg.Surface) -> None:
     over_rct =over_img.get_rect()
     screen.blit(over_img,over_rct)
     
-    font = pg.font.Font(None,80)
+    font = pg.font.Font(None,80) #  文字の部分
     txt = font.render("Game Over",True,(255,255,255))
     txt_rct = txt.get_rect(center = (WIDTH//2,HEIGHT//2))
     screen.blit(txt,txt_rct)
     
+    
     for i in range(2):
-        sad_img = pg.image.load("fig/8.png")
-        sad1_img= pg.transform.rotozoom(sad_img, 0, 1.0)
+        sad_img = pg.image.load("fig/8.png")  # 画像Surfaceを作成
+        sad1_img= pg.transform.rotozoom(sad_img, 0, 1.0) #  拡大縮小などを設定
         sad1_rct = sad1_img.get_rect()
-        sad1_rct.center = (WIDTH//2+200+(-400*i),HEIGHT//2)
+        sad1_rct.center = (750+(-400*i),HEIGHT//2)
         screen.blit(sad1_img,sad1_rct)
-        #sad1_img = pg.transform.flip(sad_img, True, True)
+        
+        
     pg.display.update()
     time.sleep(5)
         
@@ -58,7 +60,6 @@ def accsel():
     saccs = [a for a in range(1, 11)]
     for r in range(1, 11):
         bb_img = pg.Surface((20*r, 20*r))
-        pg.transform.flip(kk_img, True, False)
         pg.draw.circle(bb_img, (255, 0, 0), (10*r, 10*r), 10*r)
     return  bb_img
 
