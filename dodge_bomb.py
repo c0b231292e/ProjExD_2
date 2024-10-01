@@ -25,7 +25,6 @@ def check_bound(obj_rct: pg.Rect) -> tuple[bool,bool]:
         tate = False
     return yoko, tate
 
-
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
@@ -47,7 +46,9 @@ def main():
             if event.type == pg.QUIT: 
                 return
         screen.blit(bg_img, [0, 0]) 
-
+        if kk_rct.colliderect(bb_rct):
+            #  こうかとんと爆弾が重なっていたら
+            return 
         key_lst = pg.key.get_pressed()
         sum_mv = [0, 0]  #横座標、縦座標の順
         # if key_lst[pg.K_UP]:
