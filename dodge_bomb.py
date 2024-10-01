@@ -63,7 +63,8 @@ def accsel():
         pg.draw.circle(bb_img, (255, 0, 0), (10*r, 10*r), 10*r)
     return  
 
-
+def kirikae():
+    return
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
