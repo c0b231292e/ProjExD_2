@@ -1,6 +1,7 @@
 import os
 import random
 import sys
+import time
 import pygame as pg
 
 
@@ -25,6 +26,43 @@ def check_bound(obj_rct: pg.Rect) -> tuple[bool,bool]:
         tate = False
     return yoko, tate
 
+
+def gameover(screen:pg.Surface) -> None:
+    """
+    ゲームオーバーの設定
+    
+    """
+    over_img = pg.Surface((WIDTH,HEIGHT))
+    pg.draw.rect(over_img,(0,0,0),pg.Rect(0,0,WIDTH,HEIGHT))
+    over_img.set_alpha(150)
+    over_rct =over_img.get_rect()
+    screen.blit(over_img,over_rct)
+    
+    font = pg.font.Font(None,80)
+    txt = font.render("Game Over",True,(255,255,255))
+    txt_rct = txt.get_rect(center = (WIDTH//2,HEIGHT//2))
+    screen.blit(txt,txt_rct)
+    
+    for i in range(2):
+        sad_img = pg.image.load("fig/8.png")
+        sad1_img= pg.transform.rotozoom(sad_img, 0, 1.0)
+        sad1_rct = sad1_img.get_rect()
+        sad1_rct.center = (WIDTH//2+200+(-400*i),HEIGHT//2)
+        screen.blit(sad1_img,sad1_rct)
+        #sad1_img = pg.transform.flip(sad_img, True, True)
+    pg.display.update()
+    time.sleep(5)
+        
+        
+def accsel():
+    saccs = [a for a in range(1, 11)]
+    for r in range(1, 11):
+        bb_img = pg.Surface((20*r, 20*r))
+        pg.transform.flip(kk_img, True, False)
+        pg.draw.circle(bb_img, (255, 0, 0), (10*r, 10*r), 10*r)
+    return  bb_img
+
+
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
@@ -47,7 +85,8 @@ def main():
                 return
         screen.blit(bg_img, [0, 0]) 
         if kk_rct.colliderect(bb_rct):
-            #  こうかとんと爆弾が重なっていたら
+            gameover(screen)
+             #  こうかとんと爆弾が重なっていたら
             return 
         key_lst = pg.key.get_pressed()
         sum_mv = [0, 0]  #横座標、縦座標の順
