@@ -31,7 +31,8 @@ def check_bound(obj_rct: pg.Rect) -> tuple[bool,bool]:
 def gameover(screen:pg.Surface) -> None:
     """
     ゲームオーバーの設定
-    
+    引数：screen
+    戻り値：None
     """
     over_img = pg.Surface((WIDTH,HEIGHT))
     pg.draw.rect(over_img,(0,0,0),pg.Rect(0,0,WIDTH,HEIGHT))
@@ -57,13 +58,23 @@ def gameover(screen:pg.Surface) -> None:
     time.sleep(5)
         
         
-def accsel():
+def accsel(limit:int) -> tuple[list[int],list[pg.Surface]]:
+    """
+    爆弾の加速と大きさ
+    引数：段階
+    戻り値：加速のリストと画像のリスト
+    """
     for r in range(1, 11):
         bb_img = pg.Surface((20*r, 20*r))
         pg.draw.circle(bb_img, (255, 0, 0), (10*r, 10*r), 10*r)
     return  
 
-def kirikae():
+def kirikae() -> dict[tuple[int,int]:pg.Surface]:
+    """
+    飛ぶ方向に従って画像を切り替える
+    引数：None
+    戻り値：｛移動量の合計：画像｝
+    """
     return
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
@@ -87,7 +98,7 @@ def main():
                 return
         screen.blit(bg_img, [0, 0]) 
         if kk_rct.colliderect(bb_rct):
-            gameover(screen)
+            gameover(screen)  # gameoverを呼び出す
              #  こうかとんと爆弾が重なっていたら
             return 
         key_lst = pg.key.get_pressed()
@@ -112,9 +123,9 @@ def main():
         bb_rct.move_ip(vx,vy)
         yoko, tate = check_bound(bb_rct)
         if not yoko:
-            vx *= -1
+            vx *= -1  # 反転する
         if not tate:
-            vy *= -1
+            vy *= -1  # 反転する
         screen.blit(bb_img, bb_rct)
         pg.display.update()
         tmr += 1
